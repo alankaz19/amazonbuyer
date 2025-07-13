@@ -1,8 +1,11 @@
 # 網頁爬蟲相關
-selenium==4.15.2
+playwright==1.40.0
 requests==2.31.0
 beautifulsoup4==4.12.2
 lxml==4.9.3
+
+# Playwright 支援（保留 Selenium 作為備選）
+selenium==4.15.2
 
 # 資料處理
 pandas==2.1.3

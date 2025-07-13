@@ -14,11 +14,16 @@ class Config(BaseSettings):
     # Amazon 設定
     amazon_email: str = Field(..., env="AMAZON_EMAIL")
     amazon_password: str = Field(..., env="AMAZON_PASSWORD")
-    amazon_base_url: str = Field(default="https://www.amazon.com", env="AMAZON_BASE_URL")
+    amazon_base_url: str = Field(default="https://www.amazon.co.jp", env="AMAZON_BASE_URL")
+    amazon_region: str = Field(default="jp", env="AMAZON_REGION")  # jp, com, co.uk, etc.
+    amazon_currency: str = Field(default="JPY", env="AMAZON_CURRENCY")  # JPY, USD, GBP, etc.
     
     # 瀏覽器設定
+    browser_engine: str = Field(default="playwright", env="BROWSER_ENGINE")  # playwright, selenium
+    browser_type: str = Field(default="chromium", env="BROWSER_TYPE")  # chromium, firefox, webkit
     browser_headless: bool = Field(default=True, env="BROWSER_HEADLESS")
     browser_timeout: int = Field(default=30, env="BROWSER_TIMEOUT")
+    browser_locale: str = Field(default="ja-JP", env="BROWSER_LOCALE")  # ja-JP, en-US, etc.
     
     # 監控設定
     monitor_interval: int = Field(default=300, env="MONITOR_INTERVAL")  # 5分鐘

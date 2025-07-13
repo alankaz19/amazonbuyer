@@ -42,6 +42,22 @@ class Product(BaseModel):
         
         return True
     
+    def get_formatted_price(self) -> str:
+        """獲取格式化的價格字串"""
+        if not self.is_price_valid():
+            return "價格未知"
+        
+        if self.currency == "JPY":
+            return f"¥{self.price:,.0f}"
+        elif self.currency == "USD":
+            return f"${self.price:.2f}"
+        elif self.currency == "GBP":
+            return f"£{self.price:.2f}"
+        elif self.currency == "EUR":
+            return f"€{self.price:.2f}"
+        else:
+            return f"{self.price:.2f} {self.currency}"
+    
     def should_buy(self, max_price: Optional[float] = None) -> bool:
         """判斷是否應該購買
         

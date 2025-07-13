@@ -11,7 +11,7 @@ from typing import Optional
 
 from core.config import Config
 from core.logger import setup_logger
-from services.amazon_scraper import AmazonScraper
+from services.unified_scraper import UnifiedAmazonScraper, AsyncUnifiedAmazonScraper
 from services.product_monitor import ProductMonitor
 from services.auto_buyer import AutoBuyer
 from utils.data_storage import DataStorage, ReportGenerator
@@ -27,7 +27,7 @@ class AmazonBuyerApp:
         self.running = True
         
         # 初始化服務
-        self.scraper = AmazonScraper(config)
+        self.scraper = UnifiedAmazonScraper(config)
         self.monitor = ProductMonitor(config, self.scraper)
         self.buyer = AutoBuyer(config, self.scraper)
         self.storage = DataStorage(config.output_dir)
@@ -143,8 +143,11 @@ class AmazonBuyerApp:
         self.logger.info("開始異步監控模式")
         
         try:
-            # 使用異步監控
-            await self.monitor.start_monitoring_async()
+            # 使用異步爬蟲重新初始化監控
+            async_scraper = AsyncUnifiedAmazonScraper(self.config)
+            async with async_scraper:
+                # 使用異步監控
+                await self.monitor.start_monitoring_async()
             
         except Exception as e:
             self.logger.error(f"異步監控過程發生錯誤: {e}")
