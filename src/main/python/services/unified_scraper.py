@@ -7,6 +7,7 @@ from core.config import Config
 from models.product import Product
 from services.playwright_scraper import PlaywrightAmazonScraper
 from services.amazon_scraper import AmazonScraper
+from services.mcp_playwright_scraper import MCPPlaywrightScraper
 
 
 class UnifiedAmazonScraper:
@@ -19,7 +20,21 @@ class UnifiedAmazonScraper:
     
     def _initialize_scraper(self):
         """根據配置初始化適當的爬蟲"""
-        if self.config.browser_engine.lower() == "playwright":
+        engine = self.config.browser_engine.lower()
+        
+        if engine == "mcp" or engine == "mcp-playwright":
+            try:
+                self.scraper = MCPPlaywrightScraper(self.config)
+                logger.info("使用 MCP Playwright 爬蟲引擎")
+            except Exception as e:
+                logger.warning(f"MCP Playwright 初始化失敗，回退到 Playwright: {e}")
+                try:
+                    self.scraper = PlaywrightAmazonScraper(self.config)
+                    logger.info("使用 Playwright 爬蟲引擎")
+                except ImportError:
+                    logger.warning("Playwright 未安裝，回退到 Selenium")
+                    self.scraper = AmazonScraper(self.config)
+        elif engine == "playwright":
             try:
                 self.scraper = PlaywrightAmazonScraper(self.config)
                 logger.info("使用 Playwright 爬蟲引擎")

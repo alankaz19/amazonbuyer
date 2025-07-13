@@ -10,7 +10,7 @@
 - 🛒 **自動購買** - 支援完整的購買流程自動化
 - 📊 **數據分析** - 詳細的價格歷史和統計報告
 - 🔔 **多重通知** - Email、Slack、Webhook 通知支援
-- ⚙️ **雙引擎支援** - Playwright + Selenium 回退機制
+- ⚙️ **三引擎支援** - MCP + Playwright + Selenium 智能回退
 
 ## 🚀 快速開始
 
@@ -20,7 +20,11 @@
 # 安裝 Python 依賴
 pip install -r requirements.txt
 
-# 安裝 Playwright（推薦）
+# 安裝 MCP Playwright（推薦）
+npx @playwright/mcp@latest
+npx playwright install chromium
+
+# 或安裝傳統 Playwright
 playwright install chromium
 ```
 
@@ -67,11 +71,14 @@ python src/main/python/main.py --monitor --async
 
 - 📚 [完整使用指南](docs/user/USAGE.md)
 - 🇯🇵 [Amazon.jp 專用指南](docs/user/AMAZON_JP_GUIDE.md)
+- 🎭 [MCP Playwright 指南](docs/user/MCP_GUIDE.md)
 - 🎮 [互動式演示](examples/amazon_jp_demo.py)
+- 🧪 [MCP 測試工具](examples/test_mcp.py)
 
 ## 🛠️ 核心功能
 
 ### 智能爬蟲
+- **MCP Playwright**：最新 MCP 協議，更輕量高效
 - **Playwright 引擎**：現代化、高效能
 - **反檢測機制**：避免被 Amazon 封鎖
 - **多瀏覽器支援**：Chromium、Firefox、WebKit
@@ -159,6 +166,10 @@ python src/main/python/main.py --report --days 7
 ### 瀏覽器選擇
 
 ```bash
+# MCP Playwright（最推薦）
+BROWSER_ENGINE=mcp
+BROWSER_TYPE=chromium
+
 # Playwright（推薦）
 BROWSER_ENGINE=playwright
 BROWSER_TYPE=chromium

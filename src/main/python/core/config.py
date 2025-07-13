@@ -19,7 +19,7 @@ class Config(BaseSettings):
     amazon_currency: str = Field(default="JPY", env="AMAZON_CURRENCY")  # JPY, USD, GBP, etc.
     
     # 瀏覽器設定
-    browser_engine: str = Field(default="playwright", env="BROWSER_ENGINE")  # playwright, selenium
+    browser_engine: str = Field(default="playwright", env="BROWSER_ENGINE")  # mcp, playwright, selenium
     browser_type: str = Field(default="chromium", env="BROWSER_TYPE")  # chromium, firefox, webkit
     browser_headless: bool = Field(default=True, env="BROWSER_HEADLESS")
     browser_timeout: int = Field(default=30, env="BROWSER_TIMEOUT")
